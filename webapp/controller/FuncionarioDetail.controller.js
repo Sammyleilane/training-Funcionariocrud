@@ -90,35 +90,18 @@ sap.ui.define(
       /* =========================================================== */
       /* ======================== SALVAR =========================== */
       /* =========================================================== */
-      onSave: function () {
+onSave: function (oEvent) {
         const oModel = this.getView().getModel();
-        const oCtx = this.getView().getBindingContext();
+        const sPath = oEvent.getSource().getBindingContext().getPath();  
+        
+        const oData = 
+        { "NAME": this.getView().byId("_IDGenInput").getValue(),
+          "DEPARTMENT": this.getView().byId("_IDGenInput1").getValue(),
+          "SALARY": this.getView().byId("_IDGenInput2").getValue()
 
-        if (!oCtx) {
-          sap.m.MessageBox.error("Nenhum contexto encontrado para atualização");
-          return;
-        }
+        };
 
-        const sPath = oCtx.getPath();
-        const oData = oCtx.getObject();
-
-        console.log("Salvando:", sPath, oData);
-
-        // Tenta via submitChanges primeiro (caso o modelo rastreie pendências)
-        if (oModel.hasPendingChanges()) {
-          oModel.submitChanges({
-            success: () => {
-              sap.m.MessageToast.show("Alterações salvas com sucesso");
-              this.onNavBack();
-            },
-            error: (oError) => {
-              console.error("Erro no submitChanges:", oError);
-              sap.m.MessageBox.error("Erro ao salvar alterações");
-            },
-          });
-        } else {
-          // Fallback: chama update() diretamente
-          oModel.update(sPath, oData, {
+        oModel.update(sPath, oData, {
             success: () => {
               sap.m.MessageToast.show("Atualização realizada com sucesso");
               this.onNavBack();
@@ -128,7 +111,7 @@ sap.ui.define(
               sap.m.MessageBox.error("Erro ao atualizar o registro");
             },
           });
-        }
+        
       },
 
       /* =========================================================== */
