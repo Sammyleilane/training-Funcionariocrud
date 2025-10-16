@@ -97,11 +97,19 @@
       },
       "routes": [
         {
-          "name": "RouteMain",
-          "pattern": ":?query:",
-          "target": [
-            "TargetMain"
-          ]
+          "name": "Main",
+          "pattern": "",
+          "target": ["TargetMain"]
+        },
+        {
+          "name": "Create",
+          "pattern": "create",
+          "target": ["TargetFuncionarioDetail"]
+        },
+        {
+          "name": "Edit",
+          "pattern": "edit/{ID}",
+          "target": ["TargetFuncionarioDetail"]
         }
       ],
       "targets": {
@@ -111,7 +119,15 @@
           "clearControlAggregation": false,
           "viewId": "Main",
           "viewName": "Main"
-        }
+        },
+        "TargetFuncionarioDetail": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "FuncionarioDetail",
+          "viewName": "FuncionarioDetail",
+          "viewLevel": 2
+        }       
       }
     },
     "rootView": {
